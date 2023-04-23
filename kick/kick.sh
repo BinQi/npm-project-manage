@@ -133,7 +133,7 @@ function apply_patch() {
   # 先reverse再apply，防止已经apply后再次apply失败
   echo "applying patch: $patch_file"
   git apply -R "$patch_file_path"
-  if git apply "$patch_file_path"; then
+  if git apply --binary "$patch_file_path"; then
       echo "patch applied: $patch_file"
     else
       echo "${error_prefix}fail to apply patch: $patch_file!${error_patch_suffix}"
