@@ -130,7 +130,10 @@ function apply_patch() {
   get_latest_patch_file
   patch_file=$patch_prefix$v_main.$v_major.$v_junior$patch_suffix
   echo "applying patch: $patch_file"
-  if git apply "./kick/patches/$patch_file"; then
+  patch_file_path="./kick/patches/$patch_file"
+  # 先reverse再apply，防止已经apply后再次apply失败
+  git apply -R "$patch_file_path"
+  if git apply "$patch_file_path"; then
       echo "patch applied: $patch_file"
     else
       echo "${error_prefix}fail to apply patch: $patch_file!${error_patch_suffix}"
