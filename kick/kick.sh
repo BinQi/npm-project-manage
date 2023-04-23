@@ -117,7 +117,7 @@ function create_patch() {
   ((v_junior++))
   patch_file=$patch_prefix$v_main.$v_major.$v_junior$patch_suffix
   echo "creating patch..."
-  git diff HEAD -- . :^.idea :^.idea2 > "./kick/patches/$patch_file"
+  git diff HEAD --full-index --binary -- . :^.idea :^.idea2 > "./kick/patches/$patch_file"
   if [ $? == 0 ]; then
     echo "patch created: $patch_file"
   else
@@ -129,9 +129,9 @@ function create_patch() {
 function apply_patch() {
   get_latest_patch_file
   patch_file=$patch_prefix$v_main.$v_major.$v_junior$patch_suffix
-  echo "applying patch: $patch_file"
   patch_file_path="./kick/patches/$patch_file"
   # 先reverse再apply，防止已经apply后再次apply失败
+  echo "applying patch: $patch_file"
   git apply -R "$patch_file_path"
   if git apply "$patch_file_path"; then
       echo "patch applied: $patch_file"
