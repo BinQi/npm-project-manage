@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "show a way to integrate open source project and custom modification",
   "scripts": {
-    "kick": "/bin/sh ./kick/kick.sh",
-    "preinstall": "/bin/sh ./kick/kick.sh",
+    "kick-patch": "/bin/sh ./kick/kick.sh create_patch",
+    "preinstall": "/bin/sh ./kick/kick.sh apply_patch",
     "postinstall": "echo here it ends!"
   },
   "keywords": [],
