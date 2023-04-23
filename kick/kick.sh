@@ -8,11 +8,11 @@
 VERSION=0.0.0
 USAGE="kick <command>\n\n
        Usage:\n\n
-       kick create_patch                     自动在./kick/patches目录下生成本地修改的patch文件\n
-       kick apply_patch                      自动应用最新的patch修改到项目中\n
-       kick get_latest_patch_file            run this project's tests\n
-       kick -v                               display current version of kick\n
-       kick -h                               print help message\n
+       kick create_patch project_name[optional]                    自动在./kick/patches目录下生成本地修改的patch文件\n
+       kick apply_patch project_name[optional]                     自动应用最新的patch修改到项目中\n
+       kick get_latest_patch_file project_name[optional]           run this project's tests\n
+       kick -v                                                     display current version of kick\n
+       kick -h                                                     print help message\n
 "
 
 # --- Option processing --------------------------------------------
@@ -48,12 +48,19 @@ cmd=$1
 param=$2
 command="$1"
 
-patch_prefix="jitsi+"
+patch_prefix="kick+"
+if [ param != "" ]; then
+  patch_prefix="${param}+"
+fi
 patch_suffix=".patch"
 patches_dir="./kick/patches/*"
 v_main=0
 v_major=0
 v_junior=0
+
+error_prefix="\033[31m"
+error_suffix="\033[0m"
+npm_error_code=1
 # -----------------------------------------------------------------
 #LOCK_FILE=/tmp/${SUBJECT}.lock
 #
@@ -114,8 +121,8 @@ function create_patch() {
   if [ $? == 0 ]; then
     echo "patch created: $patch_file"
   else
-    echo "fail to created patch!"
-    exit 1
+    echo "${error_prefix}fail to created patch!${error_suffix}"
+    exit $npm_error_code
   fi
 }
 
@@ -126,8 +133,8 @@ function apply_patch() {
   if git apply "./kick/patches/$patch_file"; then
       echo "patch applied: $patch_file"
     else
-      echo "fail to apply patch: $patch_file!"
-      exit 0
+      echo "${error_prefix}fail to apply patch: $patch_file!${error_patch_suffix}"
+      exit $npm_error_code
     fi
 }
 
