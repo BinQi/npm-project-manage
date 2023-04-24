@@ -48,8 +48,9 @@ cmd=$1
 param=$2
 command="$1"
 
-patch_prefix="kick+"
-if [ param != "" ]; then
+if [ ! -n "$param" ]; then
+  patch_prefix="kick+"
+else
   patch_prefix="${param}+"
 fi
 patch_suffix=".patch"
