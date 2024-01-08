@@ -15,9 +15,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    
+    "lib-jitsi-meet": "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1454.0.0+fd668c9d/lib-jitsi-meet.tgz"
   },
   "devDependencies": {
-    
+    "patch-package": "6.4.7"
   }
 }
